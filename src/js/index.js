@@ -33,13 +33,13 @@ export default class RmpVast {
    * @typedef {object} Labels
    * @property {string} [skipMessage]
    * @property {string} [closeAd]
-   * @property {string} [textForInteractionUIOnMobile] 
+   * @property {string} [textForInteractionUIOnMobile]
    * @typedef {object} RmpVastParams
    * @property {number} [ajaxTimeout] - timeout in ms for an AJAX request to load a VAST tag from the ad server.
    *  Default 8000.
-   * @property {number} [creativeLoadTimeout] - timeout in ms to load linear media creative from the server. 
+   * @property {number} [creativeLoadTimeout] - timeout in ms to load linear media creative from the server.
    *  Default 10000.
-   * @property {boolean} [ajaxWithCredentials] - AJAX request to load VAST tag from ad server should or should not be 
+   * @property {boolean} [ajaxWithCredentials] - AJAX request to load VAST tag from ad server should or should not be
    *  made with credentials. Default: false.
    * @property {number} [maxNumRedirects] - the number of VAST wrappers the player should follow before triggering an
    *  error. Default: 4. Capped at 30 to avoid infinite wrapper loops.
@@ -47,23 +47,23 @@ export default class RmpVast {
    * @property {boolean} [showControlsForAdPlayer] - Shows Ad player HTML5 default video controls. Default: false.
    * @property {boolean} [vastXmlInput] - Instead of a VAST URI, we provide directly to rmp-vast VAST XML. Default: false.
    * @property {boolean} [enableVpaid] - Enables VPAID support or not. Default: true.
-   * @property {VpaidSettings} [vpaidSettings] - Information required to display VPAID creatives - note that it is up 
+   * @property {VpaidSettings} [vpaidSettings] - Information required to display VPAID creatives - note that it is up
    *  to the parent application of rmp-vast to provide those informations
    * @property {boolean} [useHlsJS] - Enables hls.js usage to display creatives delivered in HLS format on all devices. Include hls.js library (./externals/hls/hls.min.js) in your page before usage. Default: true.
    * @property {boolean} [debugHlsJS] - Enables debug log when hls.js is used to stream creatives. Default: false.
    * @property {boolean} [debugRawConsoleLogs] - Enables raw debug console log for Flutter apps and legacy platforms. Default: false.
   * @property {boolean} [omidSupport] - Enables OMID (OM Web SDK) support in rmp-vast. Default: false.
-   * @property {string[]} [omidAllowedVendors] - List of allowed vendors for ad verification. Vendors not listed will 
+   * @property {string[]} [omidAllowedVendors] - List of allowed vendors for ad verification. Vendors not listed will
    *  be rejected. Default: [].
-   * @property {boolean} [omidAutoplay] - The content player will autoplay or not. The possibility of autoplay is not 
-   *  determined by rmp-vast, this information needs to be passed to rmp-vast (see this 
+   * @property {boolean} [omidAutoplay] - The content player will autoplay or not. The possibility of autoplay is not
+   *  determined by rmp-vast, this information needs to be passed to rmp-vast (see this
    *  script for example). Default: false (means a click to play is required).
    * @property {string} [partnerName] - partnerName for OMID. Default: 'rmp-vast'.
    * @property {string} [partnerVersion] - partnerVersion for OMID. Default: current rmp-vast version 'x.x.x'.
-   * @property {Labels} [labels] - Information required to properly display VPAID creatives - note that it is up to the 
+   * @property {Labels} [labels] - Information required to properly display VPAID creatives - note that it is up to the
    *  parent application of rmp-vast to provide those informations
-   * @property {object} [macros] - 
-   * @param {RmpVastParams} [params] - An object representing various parameters that can be passed to a rmp-vast 
+   * @property {object} [macros] -
+   * @param {RmpVastParams} [params] - An object representing various parameters that can be passed to a rmp-vast
    *  instance and that will affect the player inner-workings. Optional parameter.
    */
   constructor(idOrElement, params) {
@@ -105,7 +105,7 @@ export default class RmpVast {
     this.environmentData = Environment;
 
     Logger.printVideoEvents(this.debugRawConsoleLogs, this.currentContentPlayer, 'content');
-    // reset loadAds variables - this is reset at addestroyed 
+    // reset loadAds variables - this is reset at addestroyed
     // so that next loadAds is cleared
     this.resetVariablesForNewLoadAds();
     // handle fullscreen events
@@ -172,9 +172,9 @@ export default class RmpVast {
   }
 
 
-  /** 
+  /**
    * Dispatch an event to the custom event system
-   * @type {(eventName: string, data: object) => void} 
+   * @type {(eventName: string, data: object) => void}
    */
   dispatch(eventName, data) {
     const event = this.events[eventName];
@@ -189,7 +189,7 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * @private
    */
   #on(eventName, callback) {
@@ -204,9 +204,9 @@ export default class RmpVast {
     event.registerCallback(callback);
   }
 
-  /** 
+  /**
    * Listen to an event from the custom event system
-   * @type {(eventName: string, callback: function) => void} 
+   * @type {(eventName: string, callback: function) => void}
    */
   on(eventName, callback) {
     if (typeof eventName !== 'string' || eventName === '' || typeof callback !== 'function') {
@@ -218,7 +218,7 @@ export default class RmpVast {
     });
   }
 
-  /** 
+  /**
    * @private
    */
   #one(eventName, callback) {
@@ -229,9 +229,9 @@ export default class RmpVast {
     this.on(eventName, newCallback);
   }
 
-  /** 
+  /**
    * Listen once to an event from the custom event system
-   * @type {(eventName: string, callback: function) => void} 
+   * @type {(eventName: string, callback: function) => void}
    */
   one(eventName, callback) {
     if (typeof eventName !== 'string' || eventName === '' || typeof callback !== 'function') {
@@ -243,7 +243,7 @@ export default class RmpVast {
     });
   }
 
-  /** 
+  /**
    * @private
    */
   #off(eventName, callback) {
@@ -260,9 +260,9 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * Unregister an event from the custom event system
-   * @type {(eventName: string, callback: function) => void} 
+   * @type {(eventName: string, callback: function) => void}
    */
   off(eventName, callback) {
     if (typeof eventName !== 'string' || eventName === '' || typeof callback !== 'function') {
@@ -274,7 +274,7 @@ export default class RmpVast {
     });
   }
 
-  /** 
+  /**
    * @private
    */
   #addTrackingEvents(trackingEvents) {
@@ -290,7 +290,7 @@ export default class RmpVast {
     this.rmpVastUtils.createApiEvent('adtrackingeventsloaded', keys);
   }
 
-  /** 
+  /**
    * @private
    */
   #handleIntersect(entries) {
@@ -303,7 +303,7 @@ export default class RmpVast {
     });
   }
 
-  /** 
+  /**
    * @private
    */
   #attachViewableObserver() {
@@ -321,7 +321,7 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * @private
    */
   #initViewableImpression() {
@@ -358,7 +358,7 @@ export default class RmpVast {
     this.on('adstarted', this.attachViewableObserverFn);
   }
 
-  /** 
+  /**
    * @private
    */
   async #loopAds(ads) {
@@ -543,7 +543,7 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * @private
    */
   #handleParsedVast(response) {
@@ -558,7 +558,7 @@ export default class RmpVast {
         });
       });
     }
-    // VAST/Ad 
+    // VAST/Ad
     if (response.ads.length === 0) {
       this.rmpVastUtils.processVastErrors(303, true);
       return;
@@ -567,7 +567,7 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * @private
    */
   #getVastTag(vastData) {
@@ -616,7 +616,7 @@ export default class RmpVast {
         return;
       }
       const vastParser = new VASTClient();
-      vastParser.parseVAST(vastXml).then(response => {
+      vastParser.parseVAST(vastXml, { allowMultipleAds: true }).then(response => {
         this.rmpVastUtils.createApiEvent('adtagloaded');
         this.#handleParsedVast(response);
       }).catch(error => {
@@ -627,12 +627,12 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * @param {string} vastData - the URI to the VAST resource to be loaded - or raw VAST XML if params.vastXmlInput is true
    * @param {object} [regulationsInfo] - data for regulations as
    * @param {string} [regulationsInfo.regulations] - coppa|gdpr for REGULATIONS macro
    * @param {string} [regulationsInfo.limitAdTracking] - 0|1 for LIMITADTRACKING macro
-   * @param {string} [regulationsInfo.gdprConsent] - Base64-encoded Cookie Value of IAB GDPR consent info for 
+   * @param {string} [regulationsInfo.gdprConsent] - Base64-encoded Cookie Value of IAB GDPR consent info for
    *  GDPRCONSENT macro
    * @param {boolean} [requireCategory] - for enforcement of VAST 4 Ad Categories
    * @return {void}
@@ -677,8 +677,8 @@ export default class RmpVast {
     this.#getVastTag(finalVastData);
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   play() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -692,8 +692,8 @@ export default class RmpVast {
     }
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   pause() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -707,8 +707,8 @@ export default class RmpVast {
     }
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   stopAds() {
     if (this.__adOnStage) {
@@ -723,10 +723,10 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
    * The difference between stopAds and destroy is that after calling destroy you may not call loadAds again
-   * You will need to create a new RmpVast instance. 
-   * @type {() => void} 
+   * You will need to create a new RmpVast instance.
+   * @type {() => void}
    */
   destroy() {
     this.rmpVastUtils.destroyFullscreen();
@@ -736,8 +736,8 @@ export default class RmpVast {
     this.#initInstanceVariables();
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   skipAd() {
     if (this.__adOnStage && this.adSkippableState) {
@@ -752,7 +752,7 @@ export default class RmpVast {
     }
   }
 
-  /** 
+  /**
  * @typedef {object} Environment
  * @property {number} devicePixelRatio
  * @property {number} maxTouchPoints
@@ -769,8 +769,8 @@ export default class RmpVast {
     return this.environmentData;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get adPaused() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -783,8 +783,8 @@ export default class RmpVast {
     return false;
   }
 
-  /** 
-   * @type {(level: number) => void} 
+  /**
+   * @type {(level: number) => void}
    */
   set volume(level) {
     if (!FW.isNumber(level)) {
@@ -809,8 +809,8 @@ export default class RmpVast {
     this.rmpVastContentPlayer.volume = validatedLevel;
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get volume() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -823,8 +823,8 @@ export default class RmpVast {
     return this.rmpVastContentPlayer.volume;
   }
 
-  /** 
-   * @type {(muted: boolean) => void} 
+  /**
+   * @type {(muted: boolean) => void}
    */
   set muted(muted) {
     if (typeof muted !== 'boolean') {
@@ -844,8 +844,8 @@ export default class RmpVast {
     this.rmpVastContentPlayer.muted = muted;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get muted() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -861,15 +861,15 @@ export default class RmpVast {
     return this.rmpVastContentPlayer.muted;
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adTagUrl() {
     return this.__adTagUrl;
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adMediaUrl() {
     if (this.__adOnStage) {
@@ -884,8 +884,8 @@ export default class RmpVast {
     return '';
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get adLinear() {
     if (this.creative && this.creative.isLinear) {
@@ -894,7 +894,7 @@ export default class RmpVast {
     return false;
   }
 
-  /** 
+  /**
    * @typedef {object} AdSystem
    * @property {string} value
    * @property {string} version
@@ -916,7 +916,7 @@ export default class RmpVast {
     };
   }
 
-  /** 
+  /**
    * @typedef {object} universalAdId
    * @property {string} idRegistry
    * @property {string} value
@@ -931,8 +931,8 @@ export default class RmpVast {
     return [];
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adContentType() {
     if (this.creative && this.creative.type) {
@@ -941,8 +941,8 @@ export default class RmpVast {
     return '';
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adTitle() {
     if (this.ad && this.ad.title) {
@@ -951,8 +951,8 @@ export default class RmpVast {
     return '';
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adDescription() {
     if (this.ad && this.ad.description) {
@@ -961,7 +961,7 @@ export default class RmpVast {
     return '';
   }
 
-  /** 
+  /**
    * @typedef {object} Advertiser
    * @property {string} id
    * @property {string} value
@@ -979,7 +979,7 @@ export default class RmpVast {
     };
   }
 
-  /** 
+  /**
    * @typedef {object} Pricing
    * @property {string} value
    * @property {string} model
@@ -999,8 +999,8 @@ export default class RmpVast {
     };
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adSurvey() {
     if (this.ad && this.ad.survey) {
@@ -1012,8 +1012,8 @@ export default class RmpVast {
     };
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adAdServingId() {
     if (this.ad && this.ad.adServingId) {
@@ -1022,36 +1022,36 @@ export default class RmpVast {
     return '';
   }
 
-  /** 
+  /**
    * @typedef {object} Category
    * @property {string} authority
    * @property {string} value
    * @return {Category[]}
    */
   get adCategories() {
-    // <Category authority=”iabtechlab.com”>232</Category> 
+    // <Category authority=”iabtechlab.com”>232</Category>
     if (this.ad && this.ad.categories && this.ad.categories.length > 0) {
       return this.ad.categories;
     }
     return [];
   }
 
-  /** 
+  /**
    * @typedef {object} BlockedAdCategory
    * @property {string} authority
    * @property {string} value
    * @return {BlockedAdCategory[]}
    */
   get adBlockedAdCategories() {
-    // <BlockedAdCategories authority=”iabtechlab.com”>232</BlockedAdCategories> 
+    // <BlockedAdCategories authority=”iabtechlab.com”>232</BlockedAdCategories>
     if (this.ad && this.ad.blockedAdCategories && this.ad.blockedAdCategories.length > 0) {
       return this.ad.blockedAdCategories;
     }
     return [];
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get adDuration() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -1068,8 +1068,8 @@ export default class RmpVast {
     return -1;
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get adCurrentTime() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -1087,8 +1087,8 @@ export default class RmpVast {
     return -1;
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get adRemainingTime() {
     if (this.__adOnStage && this.creative && this.creative.isLinear) {
@@ -1110,15 +1110,15 @@ export default class RmpVast {
     return -1;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get adOnStage() {
     return this.__adOnStage;
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get adMediaWidth() {
     if (this.__adOnStage) {
@@ -1131,8 +1131,8 @@ export default class RmpVast {
     return -1;
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get adMediaHeight() {
     if (this.__adOnStage) {
@@ -1145,8 +1145,8 @@ export default class RmpVast {
     return -1;
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get clickThroughUrl() {
     if (this.creative && this.creative.clickThroughUrl) {
@@ -1155,8 +1155,8 @@ export default class RmpVast {
     return '';
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get skipTimeOffset() {
     if (this.creative && this.creative.skipoffset) {
@@ -1165,8 +1165,8 @@ export default class RmpVast {
     return -1;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get isSkippableAd() {
     if (this.creative && this.creative.isSkippableAd) {
@@ -1175,14 +1175,14 @@ export default class RmpVast {
     return false;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get contentPlayerCompleted() {
     return this.contentCompleted;
   }
 
-  /** 
+  /**
    * @param {boolean} value
    * @return {void}
    */
@@ -1192,29 +1192,29 @@ export default class RmpVast {
     }
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adErrorMessage() {
     return this.__adErrorMessage;
   }
 
-  /** 
-   * @type {() => number} 
+  /**
+   * @type {() => number}
    */
   get adVastErrorCode() {
     return this.__vastErrorCode;
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get adErrorType() {
     return this.__adErrorType;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get adSkippableState() {
     if (this.__adOnStage) {
@@ -1231,28 +1231,28 @@ export default class RmpVast {
     return false;
   }
 
-  /** 
+  /**
    * @return {HTMLMediaElement|null}
    */
   get adPlayer() {
     return this.currentAdPlayer;
   }
 
-  /** 
+  /**
    * @return {HTMLMediaElement|null}
    */
   get contentPlayer() {
     return this.currentContentPlayer;
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get initialized() {
     return this.rmpVastInitialized;
   }
 
-  /** 
+  /**
    * @typedef {object} AdPod
    * @property {number} adPodCurrentIndex
    * @property {number} adPodLength
@@ -1271,14 +1271,14 @@ export default class RmpVast {
     };
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get companionAdsRequiredAttribute() {
     return this.rmpVastCompanionCreative.requiredAttribute;
   }
 
-  /** 
+  /**
    * @param {number} inputWidth
    * @param {number} inputHeight
    * @typedef {object} Companion
@@ -1296,7 +1296,7 @@ export default class RmpVast {
     return this.rmpVastCompanionCreative.getList(inputWidth, inputHeight);
   }
 
-  /** 
+  /**
    * @param {number} index
    * @return {HTMLElement|null}
    */
@@ -1304,8 +1304,8 @@ export default class RmpVast {
     return this.rmpVastCompanionCreative.getItem(index);
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   initialize() {
     if (!this.rmpVastInitialized) {
@@ -1316,8 +1316,8 @@ export default class RmpVast {
   }
 
   // VPAID methods
-  /** 
-   * @type {(width: number, height: number, viewMode: string) => void} 
+  /**
+   * @type {(width: number, height: number, viewMode: string) => void}
    */
   resizeAd(width, height, viewMode) {
     if (this.rmpVastVpaidPlayer) {
@@ -1325,8 +1325,8 @@ export default class RmpVast {
     }
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   expandAd() {
     if (this.rmpVastVpaidPlayer) {
@@ -1334,8 +1334,8 @@ export default class RmpVast {
     }
   }
 
-  /** 
-   * @type {() => void} 
+  /**
+   * @type {() => void}
    */
   collapseAd() {
     if (this.rmpVastVpaidPlayer) {
@@ -1343,8 +1343,8 @@ export default class RmpVast {
     }
   }
 
-  /** 
-   * @type {() => boolean} 
+  /**
+   * @type {() => boolean}
    */
   get adExpanded() {
     if (this.rmpVastVpaidPlayer) {
@@ -1353,8 +1353,8 @@ export default class RmpVast {
     return false;
   }
 
-  /** 
-   * @type {() => string} 
+  /**
+   * @type {() => string}
    */
   get vpaidCompanionAds() {
     if (this.rmpVastVpaidPlayer) {
